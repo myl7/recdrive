@@ -7,6 +7,7 @@ type Options struct {
 	AuthToken   string
 	ApiEndpoint string
 	HttpClient  *http.Client
+	Cache       Cache
 }
 
 func (opt Options) Build() Options {
@@ -16,6 +17,10 @@ func (opt Options) Build() Options {
 
 	if opt.HttpClient == nil {
 		opt.HttpClient = http.DefaultClient
+	}
+
+	if opt.Cache == nil {
+		opt.Cache = &NoCache{}
 	}
 
 	return opt
