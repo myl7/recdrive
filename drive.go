@@ -22,3 +22,8 @@ var (
 		"category":  "all",
 	}
 )
+
+type ResStatus struct {
+	StatusCode int    `json:"status_code"`
+	Message    string `json:"message"`
+}
