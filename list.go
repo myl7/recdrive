@@ -5,13 +5,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 const (
 	listPathTemplate = "/folder/content/%s"
 )
 
-func (drive *Drive) ListById(id string) ([]ListItem, error) {
+func (drive *Drive) ListByID(id string) ([]ListItem, error) {
 	path := fmt.Sprintf(listPathTemplate, id)
 	s := drive.opt.ApiEndpoint + path
 	s, err := appendDefaultQuery(s)
@@ -52,15 +53,40 @@ func (drive *Drive) ListById(id string) ([]ListItem, error) {
 }
 
 func (drive *Drive) List(path string) ([]ListItem, error) {
-	return nil, nil
+	ps := splitPath(path)
+	id := "0"
+	for i := range ps {
+		items, err := drive.ListByID(id)
+		if err != nil {
+			return nil, err
+		}
+
+		for j := range items {
+			if items[j].Name == ps[i] {
+				if items[j].Type != "folder" {
+					return nil, ErrNotFolder{Path: strings.Join(ps[:i+1], "/")}
+				}
+
+				id = items[j].ID
+				break
+			}
+		}
+	}
+
+	items, err := drive.ListByID(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return items, nil
 }
 
 type ListItem struct {
 	CreaterUserNumber   string      `json:"creater_user_number"`
 	CreaterUserRealName string      `json:"creater_user_real_name"`
 	CreaterUserAvatar   string      `json:"creater_user_avatar"`
-	Number              string      `json:"number"`
-	ParentNumber        string      `json:"parent_number"`
+	ID                  string      `json:"number"`
+	ParentID            string      `json:"parent_number"`
 	DiskType            string      `json:"disk_type"`
 	IsHistory           bool        `json:"is_history"`
 	Name                string      `json:"name"`

@@ -23,3 +23,11 @@ func NewErrFromStatus(status ResStatus, path string) *ErrReqFailed {
 		return nil
 	}
 }
+
+type ErrNotFolder struct {
+	Path string
+}
+
+func (e ErrNotFolder) Error() string {
+	return fmt.Sprintf("%s is not folder", e.Path)
+}
