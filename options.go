@@ -6,7 +6,7 @@ type Options struct {
 	ApiEndpoint string
 }
 
-func (opt *Options) Build() *Options {
+func (opt Options) Build() Options {
 	if opt.ApiEndpoint == "" {
 		opt.ApiEndpoint = apiEndpointDefault
 	}

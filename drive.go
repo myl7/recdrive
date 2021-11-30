@@ -1,10 +1,13 @@
 package recdrive
 
 type Drive struct {
+	opt Options
 }
 
 func NewDrive(options Options) *Drive {
-	return nil
+	return &Drive{
+		opt: options.Build(),
+	}
 }
 
 const (
