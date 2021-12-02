@@ -1,6 +1,8 @@
 package recdrive
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type ErrReqFailed struct {
 	StatusCode int
@@ -30,4 +32,12 @@ type ErrNotFolder struct {
 
 func (e ErrNotFolder) Error() string {
 	return fmt.Sprintf("%s is not folder", e.Path)
+}
+
+type ErrNotFound struct {
+	Path string
+}
+
+func (e ErrNotFound) Error() string {
+	return fmt.Sprintf("%s is not found", e.Path)
 }

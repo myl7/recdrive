@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strings"
 )
 
 const (
@@ -53,24 +52,9 @@ func (drive *Drive) ListByID(id string) ([]ListItem, error) {
 }
 
 func (drive *Drive) List(path string) ([]ListItem, error) {
-	ps := splitPath(path)
-	id := "0"
-	for i := range ps {
-		items, err := drive.ListByID(id)
-		if err != nil {
-			return nil, err
-		}
-
-		for j := range items {
-			if items[j].Name == ps[i] {
-				if items[j].Type != "folder" {
-					return nil, ErrNotFolder{Path: strings.Join(ps[:i+1], "/")}
-				}
-
-				id = items[j].ID
-				break
-			}
-		}
+	id, err := drive.QueryID(path)
+	if err != nil {
+		return nil, err
 	}
 
 	items, err := drive.ListByID(id)
