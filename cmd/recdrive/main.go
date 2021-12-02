@@ -13,11 +13,15 @@ import (
 )
 
 func main() {
-	token := flag.String("token", "", "authentication token for recdrive")
+	tokenArg := flag.String("token", "", "authentication token for recdrive")
 	flag.Parse()
 
-	if *token == "" {
-		log.Fatalln("token is required")
+	token := *tokenArg
+	if token == "" {
+		token = os.Getenv("TOKEN")
+		if token == "" {
+			log.Fatalln("token is required")
+		}
 	}
 
 	action := flag.Arg(0)
@@ -30,7 +34,7 @@ func main() {
 		log.Fatalln("path is required")
 	}
 
-	drive := recdrive.NewDrive(recdrive.Options{AuthToken: *token})
+	drive := recdrive.NewDrive(recdrive.Options{AuthToken: token})
 
 	switch {
 	case action == "ls" || action == "list":
