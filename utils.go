@@ -33,8 +33,8 @@ func cleanPath(path string) string {
 	}
 }
 
+// path should be cleaned first
 func splitPath(path string) []string {
-	path = cleanPath(path)
 	ps := strings.Split(path, "/")
 	return ps[1:]
 }

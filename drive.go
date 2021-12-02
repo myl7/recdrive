@@ -21,6 +21,7 @@ const (
 )
 
 func (drive *Drive) QueryID(path string) (string, error) {
+	path = cleanPath(path)
 	if path == "/" {
 		return "0", nil
 	}
