@@ -31,6 +31,8 @@ func (drive *Drive) ListByID(id string) ([]ListItem, error) {
 		return nil, err
 	}
 
+	body = removeBom(body)
+
 	var status ResStatus
 	err = json.Unmarshal(body, &status)
 	if err != nil {

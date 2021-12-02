@@ -1,6 +1,7 @@
 package recdrive
 
 import (
+	"bytes"
 	"net/url"
 	"path/filepath"
 	"strings"
@@ -36,4 +37,8 @@ func splitPath(path string) []string {
 	path = cleanPath(path)
 	ps := strings.Split(path, "/")
 	return ps[1:]
+}
+
+func removeBom(b []byte) []byte {
+	return bytes.TrimPrefix(b, []byte{0xef, 0xbb, 0xbf})
 }
