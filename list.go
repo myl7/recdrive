@@ -7,14 +7,18 @@ import (
 	"net/http"
 )
 
-const (
-	listPathTemplate = "/folder/content/%s"
+var (
+	listQuery = map[string]string{
+		"disk_type": "cloud",
+		"is_rec":    "false",
+		"category":  "all",
+	}
 )
 
 func (drive *Drive) ListByID(id string) ([]ListItem, error) {
-	path := fmt.Sprintf(listPathTemplate, id)
+	path := fmt.Sprintf("/folder/content/%s", id)
 	s := drive.opt.ApiEndpoint + path
-	s, err := appendDefaultQuery(s)
+	s, err := appendQuery(s, listQuery)
 	if err != nil {
 		return nil, err
 	}

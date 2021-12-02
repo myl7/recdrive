@@ -7,14 +7,14 @@ import (
 	"strings"
 )
 
-func appendDefaultQuery(s string) (string, error) {
+func appendQuery(s string, query map[string]string) (string, error) {
 	u, err := url.Parse(s)
 	if err != nil {
 		return "", err
 	}
 
 	q := u.Query()
-	for k, v := range queryDefault {
+	for k, v := range query {
 		q.Set(k, v)
 	}
 	u.RawQuery = q.Encode()

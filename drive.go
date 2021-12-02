@@ -20,14 +20,6 @@ const (
 	apiEndpointDefault = "https://recapi.ustc.edu.cn/api/v2"
 )
 
-var (
-	queryDefault = map[string]string{
-		"disk_type": "cloud",
-		"is_rec":    "false",
-		"category":  "all",
-	}
-)
-
 func (drive *Drive) QueryID(path string) (string, error) {
 	if path == "/" {
 		return "0", nil
