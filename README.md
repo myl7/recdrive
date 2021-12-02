@@ -16,6 +16,7 @@ recdrive -token <token> ls <dir>
 recdrive -token <token> cp <file> :<dir>
 # Download a file
 recdrive -token <token> cp :<file> <file>
+# Other than `-token <token>`, use env `TOKEN` is also OK
 ```
 
 ## License
