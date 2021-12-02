@@ -121,6 +121,7 @@ func (drive *Drive) DoUpload(file io.Reader, info StartUploadInfo) (string, erro
 
 	req, err := http.NewRequest("POST", s, bytes.NewReader(body))
 	req.Header.Set(authTokenField, drive.opt.AuthToken)
+	req.Header.Set("Content-Type", "application/json")
 	res, err := drive.opt.HttpClient.Do(req)
 	if err != nil {
 		return "", err
