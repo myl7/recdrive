@@ -39,7 +39,7 @@ func (drive *Drive) QueryID(path string) (string, error) {
 
 			found := false
 			for j := range items {
-				if items[j].Name == ps[i] {
+				if Filename(items[j]) == ps[i] {
 					if items[j].Type != "folder" {
 						return "", ErrNotFolder{Path: strings.Join(ps[:i+1], "/")}
 					}
@@ -61,7 +61,7 @@ func (drive *Drive) QueryID(path string) (string, error) {
 	}
 
 	for i := range items {
-		if items[i].Name == base {
+		if Filename(items[i]) == base {
 			return items[i].ID, nil
 		}
 	}

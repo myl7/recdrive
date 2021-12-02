@@ -38,7 +38,7 @@ func main() {
 
 		var names []string
 		for i := range items {
-			names = append(names, items[i].Name)
+			names = append(names, recdrive.Filename(items[i]))
 		}
 		println(strings.Join(names, " "))
 	case action == "cp" || action == "copy":

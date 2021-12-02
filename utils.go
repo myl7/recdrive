@@ -42,3 +42,11 @@ func splitPath(path string) []string {
 func removeBom(b []byte) []byte {
 	return bytes.TrimPrefix(b, []byte{0xef, 0xbb, 0xbf})
 }
+
+func Filename(item ListItem) string {
+	if item.FileExt != "" {
+		return item.Name + "." + item.FileExt
+	} else {
+		return item.Name
+	}
+}
