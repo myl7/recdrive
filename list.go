@@ -93,7 +93,7 @@ type ListItem struct {
 	Type                string      `json:"type"`
 	FileExt             string      `json:"file_ext"`
 	FileType            string      `json:"file_type"`
-	Bytes               interface{} `json:"bytes"`
+	Bytes               interface{} `json:"bytes"` // string "" for folder or int for file
 	Hash                string      `json:"hash"`
 	TranscodeStatus     string      `json:"transcode_status"`
 	IsStar              bool        `json:"is_star"`
