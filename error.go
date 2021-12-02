@@ -15,7 +15,7 @@ func (e ErrReqFailed) Error() string {
 }
 
 func NewErrFromStatus(status ResStatus, path string) *ErrReqFailed {
-	if status.StatusCode >= 200 && status.StatusCode < 300 {
+	if status.StatusCode < 200 || status.StatusCode >= 300 {
 		return &ErrReqFailed{
 			StatusCode: status.StatusCode,
 			Message:    status.Message,
