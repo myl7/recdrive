@@ -31,7 +31,7 @@ func (drive *Drive) QueryID(path string) (string, error) {
 	dirId := "0"
 	dir := filepath.Dir(path)
 	if dir != "/" {
-		ps := splitPath(path)
+		ps := splitPath(dir)
 		for i := range ps {
 			items, err := drive.ListByID(dirId)
 			if err != nil {
