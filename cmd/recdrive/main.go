@@ -4,6 +4,9 @@ import (
 	"flag"
 	"github.com/myl7/recdrive"
 	"log"
+	"os"
+	"path/filepath"
+	"strings"
 )
 
 func main() {
@@ -33,9 +36,40 @@ func main() {
 			log.Fatalln(err.Error())
 		}
 
+		var names []string
 		for i := range items {
-			print(items[i].Name, " ")
+			names = append(names, items[i].Name)
 		}
+		println(strings.Join(names, " "))
+	case action == "cp" || action == "copy":
+		filename := filepath.Base(path)
+		if filename == "" {
+			log.Fatalln("invalid path")
+		}
+
+		file, err := os.Open(path)
+		if err != nil {
+			log.Fatalln(err.Error())
+		}
+
+		stat, err := file.Stat()
+		if err != nil {
+			log.Fatalln(err.Error())
+		}
+
+		filesize := stat.Size()
+
+		dest := flag.Arg(2)
+		if dest == "" {
+			log.Fatalln("destination is required")
+		}
+
+		id, err := drive.Upload(dest, file, filename, filesize)
+		if err != nil {
+			log.Fatalln(err.Error())
+		}
+
+		println("uploaded ok to", id)
 	default:
 		log.Fatalln("unknown action", action)
 	}
